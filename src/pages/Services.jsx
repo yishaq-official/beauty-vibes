@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { services } from '../data/mockData';
-import { openWhatsApp } from '../utils/whatsapp';
+import { openTelegram } from '../utils/telegram';
 import { FaCrown, FaClock, FaCheckCircle, FaMagic } from 'react-icons/fa';
 
 /* ---------------- ANIMATION VARIANTS ---------------- */
@@ -119,10 +119,10 @@ export default function Services() {
                   </p>
                 </div>
 
-                <button
-                  onClick={() => openWhatsApp('service', service.name)}
-                  className="relative overflow-hidden rounded-full border border-rosegold text-rosegold font-bold uppercase tracking-wider text-sm py-3 group/btn transition-all duration-300"
-                >
+                <button 
+  onClick={() => openTelegram('service', service.name)}
+  className="w-full py-3.5 relative overflow-hidden group/btn rounded-full border border-rosegold bg-transparent text-rosegold font-bold uppercase tracking-wider text-sm transition-all duration-300"
+>
                   <span className="relative z-10 group-hover/btn:text-black transition-colors duration-300">
                     Book Appointment
                   </span>

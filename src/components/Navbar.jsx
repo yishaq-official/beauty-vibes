@@ -8,14 +8,10 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Handle glassmorphism background on scroll
+  // Glass background on scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 40);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -36,94 +32,128 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-luxury/80 backdrop-blur-md shadow-lg border-b border-rosegold/10 py-3' 
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        isScrolled
+          ? 'bg-[#0f0f14]/80 backdrop-blur-xl shadow-lg border-b border-rosegold/20 py-3'
           : 'bg-transparent py-5'
       }`}
     >
+      {/* Soft Glow Line */}
+      {isScrolled && (
+        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-rosegold/40 to-transparent" />
+      )}
+
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        
+
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-transparent group-hover:border-rosegold transition-colors duration-300">
-            {/* Using the provided logo image */}
-            <img 
-              src="IMG_20260226_230531_939.jpg" 
-              alt="Salon Logo" 
-              className="w-full h-full object-cover"
+          <div className="relative w-12 h-12 rounded-full overflow-hidden">
+            <div className="absolute inset-0 rounded-full bg-rosegold/20 blur-md opacity-0 group-hover:opacity-100 transition duration-500" />
+            <img
+              src="/IMG_20260226_230531_939.jpg"
+              alt="Salon Logo"
+              className="relative w-full h-full object-cover rounded-full border-2 border-transparent group-hover:border-rosegold transition-all duration-300 group-hover:scale-105"
             />
           </div>
-          <span className="text-2xl font-serif text-white tracking-wide">
+
+          <span className="text-2xl font-serif text-white tracking-wide group-hover:tracking-wider transition-all duration-300">
             Beauty<span className="text-rosegold">Academy</span>
           </span>
         </Link>
 
-        {/* DESKTOP NAVIGATION */}
-        <nav className="hidden md:flex items-center gap-8">
+        {/* DESKTOP NAV */}
+        <nav className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
+            <Link
+              key={link.name}
               to={link.path}
-              className={`text-sm font-medium tracking-wider uppercase transition-colors duration-300 ${
-                isActive(link.path) 
-                  ? 'text-rosegold' 
-                  : 'text-gray-300 hover:text-white'
-              }`}
+              className="relative text-sm font-medium tracking-widest uppercase group"
             >
-              {link.name}
+              <span
+                className={`transition-colors duration-300 ${
+                  isActive(link.path)
+                    ? 'text-rosegold'
+                    : 'text-gray-300 group-hover:text-white'
+                }`}
+              >
+                {link.name}
+              </span>
+
+              {/* Animated Underline */}
+              <span
+                className={`absolute left-0 -bottom-2 h-[2px] bg-rosegold transition-all duration-400 ${
+                  isActive(link.path)
+                    ? 'w-full'
+                    : 'w-0 group-hover:w-full'
+                }`}
+              />
             </Link>
           ))}
         </nav>
 
-        {/* DESKTOP CTA BUTTON */}
+        {/* DESKTOP CTA */}
         <div className="hidden md:block">
-          <Link 
+          <Link
             to="/services"
-            className="px-6 py-2.5 bg-rosegold text-luxury font-bold rounded-full hover:bg-rosegold-light transition-all duration-300 shadow-[0_0_15px_rgba(183,110,121,0.3)] hover:shadow-[0_0_25px_rgba(183,110,121,0.6)] transform hover:-translate-y-0.5"
+            className="relative px-7 py-3 rounded-full font-semibold text-sm tracking-wider overflow-hidden group"
           >
-            Book Now
+            {/* Glow Background */}
+            <span className="absolute inset-0 bg-rosegold rounded-full transition-all duration-300 group-hover:scale-105 shadow-[0_0_25px_rgba(183,110,121,0.4)] group-hover:shadow-[0_0_40px_rgba(183,110,121,0.7)]" />
+
+            {/* Button Text */}
+            <span className="relative text-black group-hover:text-black transition-colors duration-300">
+              Book Now
+            </span>
           </Link>
         </div>
 
-        {/* MOBILE MENU TOGGLE */}
-        <button 
-          className="md:hidden text-gray-300 hover:text-rosegold transition-colors"
+        {/* MOBILE TOGGLE */}
+        <button
+          className="md:hidden text-gray-300 hover:text-rosegold transition-colors duration-300"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <HiX size={28} /> : <HiOutlineMenuAlt4 size={28} />}
         </button>
       </div>
 
-      {/* MOBILE MENU (Framer Motion AnimatePresence) */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
+          <motion.div
+            initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 w-full bg-luxury border-b border-rosegold/20 shadow-xl md:hidden"
+            exit={{ opacity: 0, y: -25 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-full left-0 w-full bg-[#111118]/95 backdrop-blur-xl border-b border-rosegold/20 shadow-2xl md:hidden"
           >
-            <div className="flex flex-col px-6 py-6 gap-6">
+            <div className="flex flex-col px-6 py-8 gap-7">
+
               {navLinks.map((link) => (
-                <Link 
-                  key={link.name} 
+                <Link
+                  key={link.name}
                   to={link.path}
-                  className={`text-lg font-medium tracking-wider uppercase transition-colors duration-300 ${
-                    isActive(link.path) ? 'text-rosegold' : 'text-gray-300'
+                  className={`text-lg tracking-widest uppercase transition-all duration-300 ${
+                    isActive(link.path)
+                      ? 'text-rosegold'
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   {link.name}
                 </Link>
               ))}
-              <Link 
+
+              {/* Mobile CTA */}
+              <Link
                 to="/services"
-                className="w-full py-3 bg-rosegold text-luxury text-center font-bold rounded-full mt-4"
+                className="relative mt-4 py-3 text-center font-semibold tracking-wider rounded-full overflow-hidden group"
               >
-                Book Now
+                <span className="absolute inset-0 bg-rosegold rounded-full shadow-[0_0_25px_rgba(183,110,121,0.5)] group-hover:shadow-[0_0_40px_rgba(183,110,121,0.8)] transition-all duration-300" />
+                <span className="relative text-black">
+                  Book Now
+                </span>
               </Link>
+
             </div>
           </motion.div>
         )}
