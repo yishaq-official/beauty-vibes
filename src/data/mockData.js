@@ -9,13 +9,13 @@ export const services = [
     id: 's2',
     name: "Advanced Hair Styling",
     description: "From classic updos to modern textured waves.",
-    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDd8fG1ha2V1cHxlbnwwfHwwfHx8MA%3D%3D",
   },
   {
     id: 's3',
     name: "Premium Aesthetics",
     description: "Full facial and skincare treatments using top-tier palettes.",
-    image: "IMG_20260226_230531_769.jpg", // Using your uploaded palette image
+    image: "https://images.unsplash.com/photo-1709477542149-f4e0e21d590b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fG1ha2V1cHxlbnwwfHwwfHx8MA%3D%3D", // Using your uploaded palette image
   }
 ];
 
