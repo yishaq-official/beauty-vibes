@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
-  FaTelegramPlane, 
-  FaLinkedinIn, 
-  FaEnvelope, 
+import {
+  FaTelegramPlane,
+  FaLinkedinIn,
+  FaEnvelope,
   FaPhoneAlt,
   FaAward,
   FaHome,
@@ -12,7 +12,8 @@ import {
   FaQuoteLeft
 } from 'react-icons/fa';
 
-// --- ANIMATION VARIANTS ---
+/* ---------------- ANIMATION VARIANTS ---------------- */
+
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
@@ -23,7 +24,20 @@ const staggerContainer = {
   visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
 };
 
-// --- MOCK DATA FOR TESTIMONIALS ---
+const floating = {
+  animate: {
+    y: [0, -15, 0],
+    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+  }
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } }
+};
+
+/* ---------------- TESTIMONIAL DATA ---------------- */
+
 const testimonials = [
   {
     id: 1,
@@ -46,274 +60,189 @@ const testimonials = [
 ];
 
 export default function Home() {
-  // Logic for the Testimonial Slideshow
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % testimonials.length);
-    }, 5000); // Changes slide every 5 seconds
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <main>
-      
-      {/* 1. HERO SECTION (RESTORED) */}
+    <main className="bg-[#0e0e0e] text-white overflow-hidden relative">
+
+      {/* Background Glow */}
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(183,110,121,0.08),transparent_40%),radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_40%)]"></div>
+
+      {/* HERO SECTION */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/IMG_20260226_230532_105.jpg')` }} 
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80')`
+          }}
         >
-          <div className="absolute inset-0 bg-luxury/80 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-[#111]/70 to-black/90 backdrop-blur-md"></div>
         </div>
 
-        <motion.div 
-          className="relative z-10 text-center px-4 max-w-4xl pt-20"
+        <motion.div variants={floating} animate="animate" className="absolute top-20 left-10 w-32 h-32 bg-rosegold/20 rounded-full blur-3xl" />
+        <motion.div variants={floating} animate="animate" className="absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+
+        <motion.div
+          className="relative z-10 text-center px-4 max-w-4xl"
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
         >
           <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-serif text-rosegold-light mb-4">
-            Beauty Salon & <br/><span className="text-white">Certified Academy</span>
+            Beauty Salon & <br /><span className="text-white">Certified Academy</span>
           </motion.h1>
+
           <motion.p variants={fadeInUp} className="text-xl md:text-2xl text-gray-300 mb-8 font-light">
             Learn. Get Certified. Look Professional.
           </motion.p>
-          
+
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/services" className="group flex flex-col items-center">
-              <button className="px-8 py-4 bg-rosegold hover:bg-rosegold-light text-luxury font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(183,110,121,0.5)]">
+            <Link to="/services">
+              <button className="px-8 py-4 bg-rosegold hover:bg-rosegold-light text-luxury font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(183,110,121,0.6)]">
                 Book Now
               </button>
-              <span className="mt-2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">Book your beauty service instantly</span>
             </Link>
 
-            <Link to="/courses" className="group flex flex-col items-center">
-              <button className="px-8 py-4 bg-transparent border border-rosegold text-rosegold hover:bg-rosegold/10 font-bold rounded-full transition-all duration-300 transform hover:scale-105">
+            <Link to="/courses">
+              <button className="px-8 py-4 border border-rosegold text-rosegold hover:bg-rosegold/10 font-bold rounded-full transition-all duration-300 transform hover:scale-105">
                 Register for Course
               </button>
-              <span className="mt-2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">Start your beauty career today</span>
             </Link>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* 2. ABOUT US SECTION */}
+      {/* ABOUT SECTION */}
       <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
-        <motion.div 
-          className="md:w-1/2"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-        >
-          <div className="relative rounded-full p-2 border border-rosegold/30 inline-block mx-auto flex justify-center shadow-[0_0_30px_rgba(183,110,121,0.15)] bg-luxury">
-            <img 
-              src="/IMG_20260226_230531_939.jpg" 
-              alt="BeautyVibes Logo" 
-              className="w-full max-w-md rounded-full object-cover" 
-            />
-          </div>
+        <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="md:w-1/2">
+          <img
+            src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80"
+            alt="Beauty"
+            className="rounded-3xl shadow-[0_0_40px_rgba(183,110,121,0.2)]"
+          />
         </motion.div>
-        
-        <motion.div 
-          className="md:w-1/2 text-center md:text-left"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-        >
+
+        <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="md:w-1/2">
           <h2 className="text-4xl md:text-5xl font-serif text-rosegold mb-6">About BeautyVibes</h2>
-          <p className="text-gray-300 text-lg md:text-xl mb-8 leading-relaxed font-light">
-            BeautyVibes offers personalized makeup services right at your home. 
-            We’re here to elevate your beauty routine and ensure you look flawless for any occasion without stepping out your door.
+          <p className="text-gray-300 text-lg leading-relaxed mb-8">
+            BeautyVibes offers personalized makeup services right at your home.
+            We’re here to elevate your beauty routine and ensure you look flawless for any occasion.
+            We also provide certified professional beauty training programs.
           </p>
           <Link to="/services">
-            <button className="px-8 py-3.5 bg-rosegold hover:bg-rosegold-light text-luxury font-bold rounded-full transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(183,110,121,0.4)]">
+            <button className="px-8 py-3 bg-rosegold text-luxury rounded-full hover:scale-105 transition">
               Book Now
             </button>
           </Link>
         </motion.div>
       </section>
 
-      {/* 3. WHY CHOOSE US SECTION */}
-      <section className="py-20 bg-[#121212] border-t border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Why Choose BeautyVibes?</h2>
-            <p className="text-gray-400">Excellence in every brushstroke.</p>
-          </motion.div>
-
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            <FeatureCard 
-              icon={<FaHome size={32} />} 
-              title="At-Home Convenience" 
-              desc="We bring the luxury salon experience directly to your living room."
-            />
-            <FeatureCard 
-              icon={<FaAward size={32} />} 
-              title="Certified Experts" 
-              desc="Our trainers and stylists are top-tier professionals with years of experience."
-            />
-            <FeatureCard 
-              icon={<FaGem size={32} />} 
-              title="Premium Products" 
-              desc="We strictly use high-end, cruelty-free beauty products for a flawless finish."
-            />
-          </motion.div>
+      {/* STATS SECTION */}
+      <section className="py-20 bg-[#121212] border-y border-white/5">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+          <StatCard number="500+" label="Happy Clients" />
+          <StatCard number="120+" label="Certified Students" />
+          <StatCard number="5★" label="Client Rating" />
+          <StatCard number="3+" label="Years Experience" />
         </div>
       </section>
 
-      {/* 4. ANIMATED TESTIMONIALS SLIDESHOW */}
-      <section className="py-24 px-6 max-w-5xl mx-auto overflow-hidden">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-serif text-rosegold mb-4">Client Love</h2>
-          <p className="text-gray-400">Hear from our beautiful clients and students.</p>
+      {/* SERVICES GALLERY */}
+      <section className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-serif text-rosegold mb-4">Our Premium Services</h2>
+          <p className="text-gray-400">A glimpse of the transformations we create.</p>
         </div>
 
-        <div className="relative h-[400px] md:h-[300px] flex items-center justify-center">
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1498843053639-170ff2122f35?auto=format&fit=crop&w=800&q=80"
+          ].map((img, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+              className="relative group overflow-hidden rounded-3xl"
+            >
+              <img src={img} className="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-6">
+                <h3 className="text-white text-xl font-serif">Professional Glam Makeup</h3>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-24 px-6 max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-serif text-rosegold mb-4">Client Love</h2>
+        </div>
+
+        <div className="relative h-[350px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="absolute w-full max-w-3xl bg-luxury border border-rosegold/20 rounded-3xl p-8 md:p-12 shadow-[0_0_30px_rgba(183,110,121,0.1)] flex flex-col md:flex-row items-center gap-8"
+              transition={{ duration: 0.6 }}
+              className="absolute w-full max-w-3xl bg-gradient-to-br from-[#1a1a1a] to-[#111] border border-rosegold/30 rounded-3xl p-10 shadow-[0_0_60px_rgba(183,110,121,0.2)] flex flex-col md:flex-row items-center gap-8"
             >
-              <div className="relative shrink-0">
-                <img 
-                  src={testimonials[currentSlide].image} 
-                  alt={testimonials[currentSlide].name} 
-                  className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-2 border-rosegold p-1"
-                />
-                <div className="absolute -bottom-2 -right-2 bg-rosegold text-luxury w-8 h-8 rounded-full flex items-center justify-center">
-                  <FaQuoteLeft size={12} />
-                </div>
-              </div>
-              
-              <div className="text-center md:text-left">
-                <p className="text-gray-300 text-lg md:text-xl italic mb-6 leading-relaxed">
-                  "{testimonials[currentSlide].text}"
-                </p>
-                <h4 className="text-rosegold font-bold tracking-wider uppercase">
-                  {testimonials[currentSlide].name}
-                </h4>
+              <img src={testimonials[currentSlide].image} className="w-24 h-24 rounded-full object-cover border-2 border-rosegold" />
+              <div>
+                <p className="text-gray-300 italic mb-4">"{testimonials[currentSlide].text}"</p>
+                <h4 className="text-rosegold font-bold">{testimonials[currentSlide].name}</h4>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
-        
-        {/* Slideshow Dots */}
-        <div className="flex justify-center gap-3 mt-8">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentSlide === index ? 'bg-rosegold scale-125' : 'bg-gray-600 hover:bg-gray-400'
-              }`}
-            />
-          ))}
-        </div>
       </section>
 
-      {/* 5. CONTACT INFORMATION SECTION */}
-      <section className="py-20 bg-[#121212] border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Get In Touch</h2>
-            <p className="text-gray-400">Reach out for bookings, collaborations, or course inquiries.</p>
-          </motion.div>
+      {/* FINAL CTA */}
+      <section className="relative py-24 text-center">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498843053639-170ff2122f35?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
 
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            <ContactCard 
-              icon={<FaPhoneAlt size={24} />} 
-              title="Phone" 
-              info="+251 714 358 869" 
-              link="tel:+251714358869" 
-            />
-            <ContactCard 
-              icon={<FaEnvelope size={24} />} 
-              title="Email" 
-              info="hermelab19@gmail.com" 
-              link="mailto:hermelab19@gmail.com" 
-            />
-            <ContactCard 
-              icon={<FaTelegramPlane size={24} />} 
-              title="Telegram" 
-              info="@YourTelegram" 
-              link="https://t.me/yourtelegramhandle" 
-            />
-            <ContactCard 
-              icon={<FaLinkedinIn size={24} />} 
-              title="LinkedIn" 
-              info="Connect with us" 
-              link="https://linkedin.com/in/yourprofile" 
-            />
-          </motion.div>
-        </div>
+        <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} className="relative z-10">
+          <h2 className="text-4xl md:text-5xl font-serif text-rosegold mb-6">
+            Ready To Elevate Your Beauty?
+          </h2>
+          <Link to="/services">
+            <button className="px-10 py-4 bg-rosegold text-luxury rounded-full hover:scale-105 transition">
+              Book Your Session Today
+            </button>
+          </Link>
+        </motion.div>
       </section>
+
     </main>
   );
 }
 
-// --- REUSABLE MICRO-COMPONENTS ---
+/* ---------------- COMPONENTS ---------------- */
 
-function FeatureCard({ icon, title, desc }) {
+function StatCard({ number, label }) {
   return (
-    <motion.div 
-      variants={fadeInUp}
-      className="bg-luxury p-8 rounded-2xl border border-white/5 hover:border-rosegold/30 transition-colors duration-300 flex flex-col items-center text-center group"
+    <motion.div
+      variants={scaleIn}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="p-6 rounded-2xl bg-luxury border border-white/5 hover:border-rosegold/40 transition"
     >
-      <div className="w-16 h-16 rounded-full bg-rosegold/10 text-rosegold flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-rosegold group-hover:text-luxury transition-all duration-300">
-        {icon}
-      </div>
-      <h3 className="text-xl font-serif text-white mb-3">{title}</h3>
-      <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+      <h3 className="text-3xl font-bold text-rosegold mb-2">{number}</h3>
+      <p className="text-gray-400 text-sm uppercase tracking-wider">{label}</p>
     </motion.div>
-  );
-}
-
-function ContactCard({ icon, title, info, link }) {
-  return (
-    <motion.a 
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-      className="flex flex-col items-center justify-center p-8 bg-luxury rounded-2xl border border-white/5 hover:border-rosegold/50 hover:bg-white/5 transition-all duration-300 group"
-    >
-      <div className="w-14 h-14 bg-rosegold/10 text-rosegold rounded-full flex items-center justify-center mb-4 group-hover:bg-rosegold group-hover:text-luxury transition-colors duration-300">
-        {icon}
-      </div>
-      <h3 className="text-white font-medium mb-2">{title}</h3>
-      <p className="text-gray-400 text-sm group-hover:text-gray-200 transition-colors">{info}</p>
-    </motion.a>
   );
 }
