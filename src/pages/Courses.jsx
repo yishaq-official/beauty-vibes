@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { courses } from '../data/mockData';
-import { openWhatsApp } from '../utils/telegram';
+import { openTelegram } from '../utils/telegram';
 
 export default function Courses() {
   return (
