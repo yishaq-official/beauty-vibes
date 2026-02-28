@@ -143,7 +143,7 @@ export default function Services() {
 
           <div className="grid md:grid-cols-3 gap-12">
             <ProcessStep number="01" title="Choose Service" desc="Select your desired luxury treatment from our premium collection." />
-            <ProcessStep number="02" title="Book via WhatsApp" desc="Confirm your appointment instantly with our booking system." />
+            <ProcessStep number="02" title="Book via Telegram" desc="Confirm your appointment instantly with our booking system." />
             <ProcessStep number="03" title="Enjoy Luxury" desc="Relax while our certified experts deliver flawless results." />
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function Services() {
           </p>
 
           <button
-            onClick={() => openWhatsApp('service', 'General Booking')}
+            onClick={() => openTelegram('service', 'General Booking')}
             className="px-12 py-4 bg-rosegold text-black font-bold rounded-full hover:scale-105 hover:shadow-[0_0_40px_rgba(183,110,121,0.5)] transition-all duration-300"
           >
             Book Now

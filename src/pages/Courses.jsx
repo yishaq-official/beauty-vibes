@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { courses } from '../data/mockData';
-import { openWhatsApp } from '../utils/telegram';
+import { openTelegram } from '../utils/telegram';
 
 export default function Courses() {
   return (
@@ -83,12 +83,12 @@ export default function Courses() {
 
                 {/* CTA */}
                 <button
-                  onClick={() => openWhatsApp('course', course.title)}
+                  onClick={() => openTelegram('course', course.title)}
                   className="relative w-full py-3 rounded-xl font-semibold tracking-wide overflow-hidden group/button"
                 >
                   <span className="absolute inset-0 bg-rosegold transition-all duration-300 group-hover/button:scale-105 shadow-[0_0_25px_rgba(183,110,121,0.4)] group-hover/button:shadow-[0_0_45px_rgba(183,110,121,0.7)]" />
                   <span className="relative text-black">
-                    Register via WhatsApp
+                    Register via Telegram
                   </span>
                 </button>
               </div>
