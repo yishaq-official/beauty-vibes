@@ -103,11 +103,11 @@ export default function Footer() {
               {[
                 {
                   icon: <FaTelegramPlane size={18} />,
-                  link: "https://t.me/yourtelegramhandle"
+                  link: "https://t.me/Hermela02"
                 },
                 {
                   icon: <FaLinkedinIn size={18} />,
-                  link: "https://linkedin.com/in/yourprofile"
+                  link: "https://www.linkedin.com/in/hermela-bekele-46a05b211?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
                 },
                 {
                   icon: <FaInstagram size={18} />,
