@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@theme {
+  --color-rosegold: #b76e79;
+  --color-rosegold-light: #d6a1ad;
+  --color-luxury: #0e0e0e;
+}

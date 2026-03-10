@@ -16,5 +16,8 @@ export const openTelegram = (type, itemName) => {
   const telegramUrl = `https://t.me/${telegramHandle}?text=${encodedMessage}`;
   
   // Open Telegram in a new tab/app
-  window.open(telegramUrl, "_blank");
+  const newWindow = window.open(telegramUrl, "_blank", "noopener,noreferrer");
+  if (newWindow) {
+    newWindow.opener = null;
+  }
 };

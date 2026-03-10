@@ -1,16 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import {
-  FaTelegramPlane,
-  FaLinkedinIn,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaAward,
-  FaHome,
-  FaGem,
-  FaQuoteLeft
-} from 'react-icons/fa';
 
 /* ---------------- ANIMATION VARIANTS ---------------- */
 
