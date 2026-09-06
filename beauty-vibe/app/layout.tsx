@@ -15,6 +15,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://beautyvibes.et"),
   title: "BeautyVibes | Luxury Beauty Salon & Certified Academy",
   description:
     "Premium personalized at-home makeup services and certified professional beauty training academy in Addis Ababa, Ethiopia.",
