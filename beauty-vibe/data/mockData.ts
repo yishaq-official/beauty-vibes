@@ -272,3 +272,147 @@ export const courses: Course[] = [
     ]
   }
 ];
+
+export interface TransformationLook {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  beforeImage: string;
+  afterImage: string;
+  beforeLabel: string;
+  afterLabel: string;
+  description: string;
+  serviceName: string;
+}
+
+export const transformationLooks: TransformationLook[] = [
+  {
+    id: "look-1",
+    title: "Royal Ethiopian Bridal Glam",
+    subtitle: "Wedding Day High-Definition Transformation",
+    category: "Bridal",
+    beforeImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=1000",
+    afterImage: "/IMG_20260226_230532_105.jpg",
+    beforeLabel: "Bare Canvas & Prep",
+    afterLabel: "Ultra-HD Bridal Glam",
+    description: "Flawless undertone color matching, sculptured brow architecture, dimensional contouring, and a 16-hour sweat-and-tear-proof setting technique.",
+    serviceName: "Luxury Bridal Makeup"
+  },
+  {
+    id: "look-2",
+    title: "Traditional Melse Radiant Glow",
+    subtitle: "Habesha Kemis & Cultural Harmony",
+    category: "Traditional",
+    beforeImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=1000",
+    afterImage: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&q=80&w=1000",
+    beforeLabel: "Clean Skin",
+    afterLabel: "Golden Melse Radiance",
+    description: "Warm golden undertone enhancement, dramatic winged eyes, dewy skin highlights, and transfer-resistant luxury lip artistry.",
+    serviceName: "Ethiopian Melse & Traditional Glam"
+  }
+];
+
+export interface GraduateSpotlight {
+  id: string;
+  name: string;
+  course: string;
+  year: string;
+  currentRole: string;
+  location: string;
+  quote: string;
+  image: string;
+}
+
+export const graduateSpotlights: GraduateSpotlight[] = [
+  {
+    id: "grad-1",
+    name: "Tigist Alemu",
+    course: "Professional Makeup Masterclass",
+    year: "Class of 2025",
+    currentRole: "Lead Bridal Artist & Studio Owner",
+    location: "Bole, Addis Ababa",
+    quote: "BeautyVibes didn't just teach me how to apply foundation — Hermela taught me color theory for Ethiopian skin tones and the business of bridal contracts. Within 3 months of graduating, I booked 14 brides!",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "grad-2",
+    name: "Bethlehem Haile",
+    course: "Advanced Bridal Hairstyling",
+    year: "Class of 2025",
+    currentRole: "Celebrity & Editorial Hair Stylist",
+    location: "Kazanchis, Addis Ababa",
+    quote: "The pro kit and hands-on live model training gave me immense confidence. Learning Hollywood waves and veil anchoring elevated my salon revenue dramatically.",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "grad-3",
+    name: "Selamawit Desta",
+    course: "Professional Makeup Masterclass",
+    year: "Class of 2026",
+    currentRole: "Freelance Fashion & Commercial Artist",
+    location: "CMC, Addis Ababa",
+    quote: "The small cohort size (we were only 7 students) meant personal critique every single morning. The certificate gave me immediate credibility with media productions.",
+    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=400"
+  }
+];
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+  category: 'salon' | 'academy';
+}
+
+export const faqs: FAQItem[] = [
+  {
+    category: 'salon',
+    question: "How far in advance should I book my bridal makeup?",
+    answer: "We recommend booking 1 to 3 months in advance, especially during the peak Ethiopian wedding seasons (after Tikemt, Genna, and Fasika). This guarantees your preferred morning or afternoon time slot and allows time for a bridal consultation trial."
+  },
+  {
+    category: 'salon',
+    question: "How does the at-home mobile service work in Addis Ababa?",
+    answer: "Our certified artists arrive at your home, hotel, or preparation venue anywhere across Addis Ababa (including Bole, CMC, Sarbet, Kazanchis, Old Airport, and surroundings). We bring complete professional lighting, sanitized makeup kits, and hair equipment so you can relax without dealing with city traffic."
+  },
+  {
+    category: 'salon',
+    question: "Can you accommodate my bridesmaids and mother on wedding morning?",
+    answer: "Yes! With our Full Bridal Party VIP Package, our team coordinates the bride plus up to 3 or more bridesmaids/family members. We deploy dedicated assistants to ensure everyone is completed on schedule for photography."
+  },
+  {
+    category: 'salon',
+    question: "What cosmetics brands and hygiene standards do you maintain?",
+    answer: "We strictly use 100% authentic, dermatologically tested luxury palettes and foundation systems (NARS, MAC, Laura Mercier, Charlotte Tilbury) tailored for melanin-rich and sensitive skin. All brushes and tools undergo medical-grade UV and alcohol sterilization between each client."
+  },
+  {
+    category: 'salon',
+    question: "What is your deposit and cancellation policy?",
+    answer: "A 30% reservation deposit via Telebirr or CBE Birr secures your wedding date. Dates can be rescheduled with at least 14 days' notice subject to artist calendar availability."
+  },
+  {
+    category: 'academy',
+    question: "Do I need prior makeup or styling experience to enroll?",
+    answer: "No prior experience is necessary for our Professional Makeup Masterclass. We start from absolute fundamentals — brush ergonomics, hygiene, skin preparation, and color theory — and progress step-by-step into advanced bridal and red-carpet glam."
+  },
+  {
+    category: 'academy',
+    question: "Is the professional makeup brush set and toolkit included in the tuition fee?",
+    answer: "Yes! Every enrolled student receives their own comprehensive 32-piece professional brush roll, foundation complexion palette, contour kit, mixing spatula, and lash kit to use during class and keep permanently for client work."
+  },
+  {
+    category: 'academy',
+    question: "Will I receive an accredited certification upon graduation?",
+    answer: "Yes. Upon completing the required course hours, practical assignments, and the final live model graduation exam, you will receive an official BeautyVibes Certified Diploma recognized across local salons and studios."
+  },
+  {
+    category: 'academy',
+    question: "Do you offer flexible installment payment plans?",
+    answer: "Yes! Tuition can be settled in two convenient installments (50% deposit upon registration to reserve your seat and the remaining 50% midway through the diploma program) via Telebirr or CBE Birr."
+  },
+  {
+    category: 'academy',
+    question: "Do students practice on live models or mannequins?",
+    answer: "You will practice on both! Technique foundations are perfected on mannequins, followed by intensive live model practical sessions where you work on different skin types, undertones, and face shapes with instructor coaching."
+  }
+];
+

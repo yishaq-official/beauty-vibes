@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import Link from 'next/link';
 import BookingModal from '@/components/BookingModal';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import FAQSection from '@/components/FAQSection';
+import { graduateSpotlights } from '@/data/mockData';
+import { FaGraduationCap, FaHeart, FaStar } from 'react-icons/fa';
 
 /* ---------------- ANIMATION VARIANTS ---------------- */
 
@@ -35,34 +39,40 @@ const testimonials = [
   {
     id: 1,
     name: "Amina T.",
-    text: "BeautyVibes completely transformed my look for my wedding. The at-home service was incredibly convenient, and the makeup lasted all night!",
+    role: "Bride (Sheraton Addis)",
+    text: "BeautyVibes completely transformed my look for my wedding day. The at-home mobile service was incredibly punctual, and the makeup stayed completely flawless through tears and 10 hours of dancing!",
     image: "https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=400"
   },
   {
     id: 2,
     name: "Sarah M.",
-    text: "Taking the professional makeup course was the best decision for my career. The instructors are top-tier and so supportive.",
+    role: "Melse Traditional Bride",
+    text: "The traditional Habesha kemis matching was extraordinary. The gold dewy skin finish looked majestic in daylight and in our studio photography.",
     image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&q=80&w=400"
   },
   {
     id: 3,
     name: "Hanna B.",
-    text: "Flawless execution! Having premium salon services brought directly to my living room saves me so much time without compromising on quality.",
+    role: "VIP Red Carpet Client",
+    text: "Flawless execution! Having premium salon services brought directly to my living room in Bole saves me so much time without compromising on international luxury standards.",
     image: "https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?auto=format&fit=crop&q=80&w=400"
   }
 ];
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeStoryType, setActiveStoryType] = useState<'brides' | 'graduates'>('brides');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'service' | 'course'>('service');
 
+  const activeStories = activeStoryType === 'brides' ? testimonials : graduateSpotlights;
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
+      setCurrentSlide((prev) => (prev + 1) % activeStories.length);
+    }, 5500);
     return () => clearInterval(timer);
-  }, []);
+  }, [activeStories.length]);
 
   const openBooking = (type: 'service' | 'course') => {
     setModalType(type);
@@ -166,8 +176,8 @@ export default function Home() {
       {/* SERVICES GALLERY */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-serif text-rosegold mb-4">Our Premium Services</h2>
-          <p className="text-gray-400">A glimpse of the transformations we create.</p>
+          <h2 className="text-4xl font-serif text-rosegold mb-4">Our Signature Work</h2>
+          <p className="text-gray-400">A glimpse of the red-carpet looks we create.</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -218,38 +228,140 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="py-24 px-6 max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-serif text-rosegold mb-4">Client Love</h2>
+      {/* ===== INTERACTIVE BEFORE & AFTER SLIDER SECTION ===== */}
+      <section className="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rosegold/10 border border-rosegold/30 text-rosegold text-xs uppercase tracking-widest font-semibold mb-3">
+            <span>Visual Proof of Artistry</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-serif text-white mb-4">
+            See The <span className="text-rosegold">Transformation</span>
+          </h2>
+          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+            Drag the interactive slider to reveal how our skin prep and Ultra-HD bridal techniques create effortless, enduring elegance.
+          </p>
         </div>
 
-        <div className="relative h-[350px] flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.6 }}
-              className="absolute w-full max-w-3xl bg-gradient-to-br from-[#1a1a1a] to-[#111] border border-rosegold/30 rounded-3xl p-10 shadow-[0_0_60px_rgba(183,110,121,0.2)] flex flex-col md:flex-row items-center gap-8"
+        <BeforeAfterSlider />
+      </section>
+
+      {/* ===== DUAL TESTIMONIALS SECTION ===== */}
+      <section className="py-24 px-6 max-w-5xl mx-auto border-t border-white/5">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-serif text-rosegold mb-4">Stories of Transformation</h2>
+          <p className="text-gray-400 text-sm">Loved by brides across Addis Ababa and praised by certified academy graduates.</p>
+
+          {/* Switcher Tabs */}
+          <div className="flex items-center justify-center gap-3 mt-6">
+            <button
+              onClick={() => {
+                setActiveStoryType('brides');
+                setCurrentSlide(0);
+              }}
+              className={`cursor-pointer px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+                activeStoryType === 'brides'
+                  ? 'bg-rosegold text-black shadow-[0_0_20px_rgba(183,110,121,0.5)]'
+                  : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
+              }`}
             >
-              <img
-                src={testimonials[currentSlide].image}
-                alt={testimonials[currentSlide].name}
-                className="w-24 h-24 rounded-full object-cover border-2 border-rosegold flex-shrink-0"
-              />
-              <div>
-                <p className="text-gray-300 italic mb-4">&ldquo;{testimonials[currentSlide].text}&rdquo;</p>
-                <h4 className="text-rosegold font-bold">{testimonials[currentSlide].name}</h4>
-              </div>
-            </motion.div>
+              <FaHeart size={11} />
+              <span>Bridal Clients</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveStoryType('graduates');
+                setCurrentSlide(0);
+              }}
+              className={`cursor-pointer px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+                activeStoryType === 'graduates'
+                  ? 'bg-rosegold text-black shadow-[0_0_20px_rgba(183,110,121,0.5)]'
+                  : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
+              }`}
+            >
+              <FaGraduationCap size={13} />
+              <span>Certified Graduates</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="relative min-h-[340px] flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            {activeStoryType === 'brides' ? (
+              <motion.div
+                key={`bride-${currentSlide}`}
+                initial={{ opacity: 0, x: 80 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -80 }}
+                transition={{ duration: 0.5 }}
+                className="w-full max-w-3xl bg-gradient-to-br from-[#1a1a20] via-[#141418] to-[#101014] border border-rosegold/30 rounded-3xl p-8 sm:p-10 shadow-[0_0_60px_rgba(183,110,121,0.15)] flex flex-col md:flex-row items-center gap-8"
+              >
+                <img
+                  src={testimonials[currentSlide].image}
+                  alt={testimonials[currentSlide].name}
+                  className="w-24 h-24 rounded-full object-cover border-2 border-rosegold flex-shrink-0 shadow-lg"
+                />
+                <div>
+                  <div className="flex items-center gap-1 text-rosegold mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} size={12} />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 italic mb-4 text-sm sm:text-base leading-relaxed">
+                    &ldquo;{testimonials[currentSlide].text}&rdquo;
+                  </p>
+                  <h4 className="text-white font-serif text-lg font-bold">{testimonials[currentSlide].name}</h4>
+                  <p className="text-rosegold text-xs">{testimonials[currentSlide].role}</p>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key={`grad-${currentSlide}`}
+                initial={{ opacity: 0, x: 80 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -80 }}
+                transition={{ duration: 0.5 }}
+                className="w-full max-w-3xl bg-gradient-to-br from-[#1a1a20] via-[#141418] to-[#101014] border border-rosegold/30 rounded-3xl p-8 sm:p-10 shadow-[0_0_60px_rgba(183,110,121,0.15)] flex flex-col md:flex-row items-center gap-8"
+              >
+                <img
+                  src={graduateSpotlights[currentSlide].image}
+                  alt={graduateSpotlights[currentSlide].name}
+                  className="w-24 h-24 rounded-full object-cover border-2 border-rosegold flex-shrink-0 shadow-lg"
+                />
+                <div>
+                  <div className="inline-block px-3 py-0.5 rounded-full bg-rosegold/10 text-rosegold text-[11px] font-semibold mb-2 border border-rosegold/20">
+                    {graduateSpotlights[currentSlide].course} • {graduateSpotlights[currentSlide].year}
+                  </div>
+                  <p className="text-gray-300 italic mb-4 text-sm sm:text-base leading-relaxed">
+                    &ldquo;{graduateSpotlights[currentSlide].quote}&rdquo;
+                  </p>
+                  <h4 className="text-white font-serif text-lg font-bold">{graduateSpotlights[currentSlide].name}</h4>
+                  <p className="text-rosegold text-xs">
+                    {graduateSpotlights[currentSlide].currentRole} ({graduateSpotlights[currentSlide].location})
+                  </p>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </section>
 
+      {/* ===== FAQ SECTION ===== */}
+      <section className="py-24 px-6 max-w-6xl mx-auto border-t border-white/5">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl sm:text-4xl font-serif text-rosegold mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-gray-400 text-sm">
+            Everything you need to know about booking our mobile bridal services or enrolling in the academy.
+          </p>
+        </div>
+
+        <FAQSection />
+      </section>
+
       {/* FINAL CTA */}
-      <section className="relative py-28 text-center">
+      <section className="relative py-28 text-center border-t border-white/5">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498843053639-170ff2122f35?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
 

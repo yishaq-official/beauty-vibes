@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { services, Service } from '@/data/mockData';
 import BookingModal from '@/components/BookingModal';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import FAQSection from '@/components/FAQSection';
 import {
   FaMagic,
   FaCrown,
@@ -204,6 +206,20 @@ export default function ServicesClient() {
         </motion.div>
       </section>
 
+      {/* ===== BEFORE & AFTER TRANSFORMATION SLIDER ===== */}
+      <section className="max-w-7xl mx-auto mb-24 border-t border-white/5 pt-20">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl sm:text-4xl font-serif text-white mb-3">
+            Real Transformations, <span className="text-rosegold">Flawless Results</span>
+          </h2>
+          <p className="text-gray-400 text-sm sm:text-base">
+            Slide through to witness how our tailored skin prep, precision contouring, and 16-hour setting techniques create radiant confidence.
+          </p>
+        </div>
+
+        <BeforeAfterSlider />
+      </section>
+
       {/* ===== COVERAGE AREA BANNER ===== */}
       <section className="max-w-6xl mx-auto mb-24">
         <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#17141b] via-[#141217] to-[#111116] border border-white/10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
@@ -254,6 +270,20 @@ export default function ServicesClient() {
             desc="Relax as our certified artists arrive fully equipped with sterilized luxury kits to deliver your radiant, long-lasting look."
           />
         </div>
+      </section>
+
+      {/* ===== FREQUENTLY ASKED QUESTIONS ===== */}
+      <section className="max-w-6xl mx-auto mb-24 border-t border-white/5 pt-20">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl sm:text-4xl font-serif text-rosegold mb-3">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-gray-400 text-sm">
+            Everything you need to know about bridal trials, mobile arrangements in Addis Ababa, and product safety.
+          </p>
+        </div>
+
+        <FAQSection defaultCategory="salon" showCategoryTabs={true} />
       </section>
 
       {/* Booking Modal */}

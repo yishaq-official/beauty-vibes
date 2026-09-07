@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { courses, Course } from '@/data/mockData';
+import { courses, Course, graduateSpotlights, GraduateSpotlight } from '@/data/mockData';
 import BookingModal from '@/components/BookingModal';
+import FAQSection from '@/components/FAQSection';
 import {
   FaGraduationCap,
   FaCheckCircle,
@@ -295,6 +296,71 @@ export default function CoursesClient() {
             </motion.div>
           ))}
         </div>
+
+        {/* ===== GRADUATE SUCCESS SPOTLIGHT ===== */}
+        <section className="mb-24 border-t border-white/5 pt-20">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rosegold/10 border border-rosegold/30 text-rosegold text-xs uppercase tracking-widest font-semibold mb-3">
+              <FaAward />
+              <span>Alumni Hall of Fame</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-white mb-4">
+              Where Are Our <span className="text-rosegold">Graduates Now?</span>
+            </h2>
+            <p className="text-gray-400 text-sm sm:text-base">
+              From salon founders in Bole to editorial stylists in Kazanchis, our graduates build profitable, highly respected beauty careers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {graduateSpotlights.map((grad: GraduateSpotlight) => (
+              <div
+                key={grad.id}
+                className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#16161c] to-[#101014] p-8 flex flex-col justify-between shadow-xl hover:border-rosegold/40 transition-all duration-300"
+              >
+                <div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <img
+                      src={grad.image}
+                      alt={grad.name}
+                      className="w-16 h-16 rounded-full object-cover border-2 border-rosegold shadow-md"
+                    />
+                    <div>
+                      <h4 className="text-lg font-serif text-white font-semibold">
+                        {grad.name}
+                      </h4>
+                      <p className="text-rosegold text-xs">{grad.currentRole}</p>
+                      <p className="text-gray-400 text-[11px]">{grad.location}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-300 text-xs sm:text-sm italic leading-relaxed mb-6">
+                    &ldquo;{grad.quote}&rdquo;
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400">
+                  <span>{grad.course}</span>
+                  <span className="text-rosegold font-medium">{grad.year}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== FREQUENTLY ASKED QUESTIONS ===== */}
+        <section className="mb-24 border-t border-white/5 pt-20">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="text-3xl sm:text-4xl font-serif text-rosegold mb-3">
+              Academy Frequently Asked Questions
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Answers about enrollment requirements, professional starter kits, certifications, and installment options.
+            </p>
+          </div>
+
+          <FAQSection defaultCategory="academy" showCategoryTabs={true} />
+        </section>
 
         {/* ===== BOTTOM ADVICE & REGISTRATION CTA ===== */}
         <div className="relative rounded-3xl overflow-hidden border border-rosegold/30 p-10 sm:p-14 text-center bg-gradient-to-r from-[#181216] via-[#14121a] to-[#121217] shadow-[0_0_60px_rgba(183,110,121,0.15)]">
