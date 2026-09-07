@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import Link from 'next/link';
+import BookingModal from '@/components/BookingModal';
 
 /* ---------------- ANIMATION VARIANTS ---------------- */
 
@@ -53,6 +54,8 @@ const testimonials = [
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'service' | 'course'>('service');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -60,6 +63,11 @@ export default function Home() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  const openBooking = (type: 'service' | 'course') => {
+    setModalType(type);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="bg-[#0e0e0e] text-white overflow-hidden relative">
@@ -95,17 +103,19 @@ export default function Home() {
           </motion.p>
 
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/services">
-              <button className="cursor-pointer px-8 py-4 bg-rosegold hover:bg-rosegold-light text-black font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(183,110,121,0.6)]">
-                Book Now
-              </button>
-            </Link>
+            <button
+              onClick={() => openBooking('service')}
+              className="cursor-pointer px-8 py-4 bg-rosegold hover:bg-rosegold-light text-black font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(183,110,121,0.6)]"
+            >
+              Book Service
+            </button>
 
-            <Link href="/courses">
-              <button className="cursor-pointer px-8 py-4 border border-rosegold text-rosegold hover:bg-rosegold/10 font-bold rounded-full transition-all duration-300 transform hover:scale-105">
-                Register for Course
-              </button>
-            </Link>
+            <button
+              onClick={() => openBooking('course')}
+              className="cursor-pointer px-8 py-4 border border-rosegold text-rosegold hover:bg-rosegold/10 font-bold rounded-full transition-all duration-300 transform hover:scale-105"
+            >
+              Register for Course
+            </button>
           </motion.div>
         </motion.div>
       </section>
@@ -123,15 +133,23 @@ export default function Home() {
         <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="md:w-1/2">
           <h2 className="text-4xl md:text-5xl font-serif text-rosegold mb-6">About BeautyVibes</h2>
           <p className="text-gray-300 text-lg leading-relaxed mb-8">
-            BeautyVibes offers personalized makeup services right at your home.
-            We’re here to elevate your beauty routine and ensure you look flawless for any occasion.
-            We also provide certified professional beauty training programs.
+            BeautyVibes offers personalized makeup services right at your home across Addis Ababa.
+            We’re here to elevate your beauty routine and ensure you look flawless for weddings, red carpets, and special occasions.
+            We also provide certified professional beauty training programs with kits included.
           </p>
-          <Link href="/services">
-            <button className="cursor-pointer px-8 py-3 bg-rosegold text-black font-semibold rounded-full hover:scale-105 transition">
+          <div className="flex flex-wrap gap-4">
+            <button
+              onClick={() => openBooking('service')}
+              className="cursor-pointer px-8 py-3 bg-rosegold text-black font-semibold rounded-full hover:scale-105 transition"
+            >
               Book Now
             </button>
-          </Link>
+            <Link href="/courses">
+              <button className="cursor-pointer px-8 py-3 border border-white/20 text-white font-semibold rounded-full hover:bg-white/10 transition">
+                Explore Academy
+              </button>
+            </Link>
+          </div>
         </motion.div>
       </section>
 
@@ -154,28 +172,49 @@ export default function Home() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1498843053639-170ff2122f35?auto=format&fit=crop&w=800&q=80"
-          ].map((img, index) => (
+            {
+              img: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
+              title: "Luxury Bridal Makeup"
+            },
+            {
+              img: "https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?auto=format&fit=crop&w=800&q=80",
+              title: "Traditional Melse Glam"
+            },
+            {
+              img: "https://images.unsplash.com/photo-1498843053639-170ff2122f35?auto=format&fit=crop&w=800&q=80",
+              title: "Hairstyling & Updos"
+            }
+          ].map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className="relative group overflow-hidden rounded-3xl"
+              className="relative group overflow-hidden rounded-3xl cursor-pointer"
+              onClick={() => openBooking('service')}
             >
               <img
-                src={img}
-                alt="Service Transformation"
+                src={item.img}
+                alt={item.title}
                 className="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-6">
-                <h3 className="text-white text-xl font-serif">Professional Glam Makeup</h3>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition flex flex-col justify-end p-6">
+                <h3 className="text-white text-xl font-serif mb-1">{item.title}</h3>
+                <span className="text-rosegold text-xs font-semibold uppercase tracking-wider">
+                  Click to Book Appointment →
+                </span>
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link href="/services">
+            <button className="cursor-pointer px-8 py-3.5 border border-rosegold/50 text-rosegold rounded-full hover:bg-rosegold/10 transition-colors text-sm uppercase tracking-wider font-semibold">
+              View All Services & Pricing
+            </button>
+          </Link>
         </div>
       </section>
 
@@ -201,7 +240,7 @@ export default function Home() {
                 className="w-24 h-24 rounded-full object-cover border-2 border-rosegold flex-shrink-0"
               />
               <div>
-                <p className="text-gray-300 italic mb-4">"{testimonials[currentSlide].text}"</p>
+                <p className="text-gray-300 italic mb-4">&ldquo;{testimonials[currentSlide].text}&rdquo;</p>
                 <h4 className="text-rosegold font-bold">{testimonials[currentSlide].name}</h4>
               </div>
             </motion.div>
@@ -210,21 +249,32 @@ export default function Home() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="relative py-24 text-center">
+      <section className="relative py-28 text-center">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498843053639-170ff2122f35?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
 
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="relative z-10">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="relative z-10 max-w-2xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-serif text-rosegold mb-6">
             Ready To Elevate Your Beauty?
           </h2>
-          <Link href="/services">
-            <button className="cursor-pointer px-10 py-4 bg-rosegold text-black font-bold rounded-full hover:scale-105 transition">
-              Book Your Session Today
-            </button>
-          </Link>
+          <p className="text-gray-300 text-base mb-8">
+            Experience the finest luxury makeup and hairstyling in Addis Ababa, delivered right to your home or prepared at our studio.
+          </p>
+          <button
+            onClick={() => openBooking('service')}
+            className="cursor-pointer px-10 py-4 bg-rosegold text-black font-bold rounded-full hover:scale-105 hover:shadow-[0_0_35px_rgba(183,110,121,0.5)] transition"
+          >
+            Book Your Session Today
+          </button>
         </motion.div>
       </section>
+
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialType={modalType}
+      />
     </div>
   );
 }
